@@ -160,16 +160,17 @@ if (filter_var($targetURL, FILTER_VALIDATE_URL) === false) {
 //--------------------------------
 
 // Add GET params to target URL
-if (!empty($_SERVER['QUERY_STRING'])) {
-    $targetURLParts = parse_url($targetURL);
-    if (!empty($targetURLParts['query'])) {
-        $targetURL = $targetURL . '&' . $_SERVER['QUERY_STRING'];
-    } else {
-        $targetURL = trim($targetURL, '\?');
-        $targetURL = $targetURL . '?' . $_SERVER['QUERY_STRING'];
-    }
-}
-
+//if (!empty($_SERVER['QUERY_STRING'])) {
+//    $targetURLParts = parse_url($targetURL);
+//    if (!empty($targetURLParts['query'])) {
+//        $targetURL = $targetURL . '&' . $_SERVER['QUERY_STRING'];
+//    } else {
+//        $targetURL = trim($targetURL, '\?');
+//        $targetURL = $targetURL . '?' . $_SERVER['QUERY_STRING'];
+//    }
+//}
+// var_dump($_SERVER);
+$targetURL=rtrim($targetURL,"/").$_SERVER['REQUEST_URI'];
 //-------------------------------
 
 // Create CURL request
@@ -278,7 +279,6 @@ foreach ($responseHeaders as $header) {
 }
 
 //----------------------------------
-
 if ($debug) {
     echo 'Headers sent to proxy' . PHP_EOL . PHP_EOL;
     echo implode(PHP_EOL, $httpHeadersAll);
